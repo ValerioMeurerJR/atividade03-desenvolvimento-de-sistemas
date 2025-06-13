@@ -6,3 +6,28 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Developy {
+  id         String   @id
+  name       String   @unique
+  bio        String
+  github_url String
+  avatar_url String
+  created_at DateTime
+  updated_at DateTime
+  is_active  Boolean
+  Techs      Techs[]
+
+  @@map("developy")
+}
+
+model Techs {
+  id         String   @id
+  developyId String
+  name       String   @unique
+  created_at DateTime
+  updated_at DateTime
+  Developy   Developy @relation(fields: [developyId], references: [id])
+
+  @@map("techs")
+}
