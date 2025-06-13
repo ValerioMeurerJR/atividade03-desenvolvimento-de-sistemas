@@ -92,13 +92,11 @@ class DevelopyService {
             tech => !techs.some(value => value.name === tech.name)
         );
         if (notExist?.length) {
-            await Promise.all(
-                notExist.map(remove =>
-                    prisma.techs.delete({
-                        where: { name: remove.name }
-                    })
-                )
-            );
+            notExist.map(async (remove) =>
+                await prisma.techs.delete({
+                    where: { name: remove.name }
+                })
+            )
         }
         const notExistCreate = techs.filter(
             tech => !result?.Techs.some(value => value.name === tech.name)
